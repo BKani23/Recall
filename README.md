@@ -4,14 +4,14 @@ A full-stack note-taking application built with the MERN stack. Recall allows us
 
 ## Features
 
-* ✨ Create, edit, and delete notes
-* 🔍 Search notes instantly
-* 📌 Pin important notes
-* 🏷️ Tag notes for better organization
-* 🌙 Dark mode support
-* 📝 Markdown support
-* 💾 Auto-save functionality
-* 📱 Responsive design
+*  Create, edit, and delete notes
+* Search notes instantly
+* Pin important notes
+* Tag notes for better organization
+* Dark mode support
+* Markdown support
+* Auto-save functionality
+* Responsive design
 
 ## Tech Stack
 
