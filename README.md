@@ -37,17 +37,18 @@ A full-stack note-taking application built with the MERN stack. Recall allows us
 ```
 Recall/
 │
-├── client/
-│   ├── src/
-│   ├── public/
-│   └── package.json
+├── frontend/
+│   ├── src/ #Main source code
+│   ├── public/ #Static assets
+│   └── package.json  #Frontend dependencies
 │
-├── server/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   └── package.json
+├── backend/# Backend (Node + Express)
+│   ├── config/ # Database configuration
+│   ├── controllers/ # Route logic (CRUD handlers)
+│   ├── models/ # Mongoose schemas
+│   ├── routes/ # API routes 
+│   ├── server.js/ # Entry point
+│   └── package.json # Backend dependencies
 │
 └── README.md
 ```
@@ -91,30 +92,24 @@ npm run dev
 npm run dev
 ```
 
-## Roadmap
-
 ##  Roadmap
 
 * [x] Project setup (MERN structure)
 * [x] Backend setup (Express + MongoDB connection)
 * [x] CRUD operations (Notes API)
 * [x] API testing with Postman
-
 * [ ] Frontend setup (React + Vite)
 * [ ] Connect frontend to backend (Axios integration)
 * [ ] Display notes UI (list + cards)
 * [ ] Create / edit / delete notes from UI
-
 * [ ] Search functionality
 * [ ] Tags support
 * [ ] Pin notes
 * [ ] Markdown support
 * [ ] Dark mode
-
 * [ ] Authentication (JWT)
 * [ ] Rich text editor
 * [ ] Export notes (PDF / TXT)
-
 * [ ] Deploy application (Frontend + Backend)
 
 ## License
