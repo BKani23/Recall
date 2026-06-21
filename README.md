@@ -94,7 +94,7 @@ npm run dev
 ## Roadmap
 
 * [x] Project setup
-* [ ] CRUD operations
+* [x] CRUD operations
 * [ ] Search functionality
 * [ ] Tags support
 * [ ] Pin notes
