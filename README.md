@@ -98,8 +98,8 @@ npm run dev
 * [x] Backend setup (Express + MongoDB connection)
 * [x] CRUD operations (Notes API)
 * [x] API testing with Postman
-* [ ] Frontend setup (React + Vite)
-* [ ] Connect frontend to backend (Axios integration)
+* [x] Frontend setup (React + Vite)
+* [x] Connect frontend to backend (Axios integration)
 * [ ] Display notes UI (list + cards)
 * [ ] Create / edit / delete notes from UI
 * [ ] Search functionality
