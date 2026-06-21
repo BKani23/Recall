@@ -93,17 +93,29 @@ npm run dev
 
 ## Roadmap
 
-* [x] Project setup
-* [x] CRUD operations
+##  Roadmap
+
+* [x] Project setup (MERN structure)
+* [x] Backend setup (Express + MongoDB connection)
+* [x] CRUD operations (Notes API)
+* [x] API testing with Postman
+
+* [ ] Frontend setup (React + Vite)
+* [ ] Connect frontend to backend (Axios integration)
+* [ ] Display notes UI (list + cards)
+* [ ] Create / edit / delete notes from UI
+
 * [ ] Search functionality
 * [ ] Tags support
 * [ ] Pin notes
 * [ ] Markdown support
-* [ ] Authentication
-* [ ] Rich text editor
-* [ ] Export notes
 * [ ] Dark mode
-* [ ] Deploy application
+
+* [ ] Authentication (JWT)
+* [ ] Rich text editor
+* [ ] Export notes (PDF / TXT)
+
+* [ ] Deploy application (Frontend + Backend)
 
 ## License
 
