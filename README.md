@@ -67,14 +67,14 @@ cd recall
 #### Client
 
 ```bash
-cd client
+cd frontend
 npm install
 ```
 
 #### Server
 
 ```bash
-cd server
+cd backend
 npm install
 ```
 
@@ -83,7 +83,7 @@ npm install
 #### Backend
 
 ```bash
-npm run dev
+npm start
 ```
 
 #### Frontend
