@@ -7,38 +7,41 @@ import { getNotes } from "../services/api";
 import { normalizeNote } from "../utils/normalizeNote";
 
 export default function App() {
-  
   const [activeNav, setActiveNav] = useState("All Notes");
   const [selectedNote, setSelectedNote] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
   const [search, setSearch] = useState("");
   const [notes, setNotes] = useState([]);
+  const [activeTag, setActiveTag] = useState(null);
 
   // Fetch live notes
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const res = await getNotes();
-  
+
         const safeNotes = res.data.map(normalizeNote);
-  
+
         setNotes(safeNotes);
         setSelectedNote(safeNotes[0] || null);
       } catch (err) {
         console.error("Error fetching notes:", err);
       }
     };
-  
+
     fetchNotes();
   }, []);
 
   // Search filter
-  const filteredNotes = notes.filter(
-    (n) =>
+  const filteredNotes = notes.filter((n) => {
+    const matchesSearch =
       n.title.toLowerCase().includes(search.toLowerCase()) ||
-      n.preview.toLowerCase().includes(search.toLowerCase())
-  );
+      n.preview.toLowerCase().includes(search.toLowerCase());
 
+    const matchesTag = !activeTag || n.tags.some((t) => t.name === activeTag);
+
+    return matchesSearch && matchesTag;
+  });
 
   return (
     <>
@@ -51,6 +54,8 @@ export default function App() {
           onSearchChange={setSearch}
           darkMode={darkMode}
           onDarkModeToggle={() => setDarkMode((d) => !d)}
+          activeTag={activeTag}
+          onTagSelect={setActiveTag}
         />
 
         <NoteList
@@ -64,8 +69,3 @@ export default function App() {
     </>
   );
 }
-
-
-
- 
-

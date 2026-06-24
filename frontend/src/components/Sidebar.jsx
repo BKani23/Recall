@@ -1,4 +1,4 @@
-import { SearchIcon, MoonIcon, PlusIcon, NavIcons, ChevronDownIcon } from "./Icons";
+import {SearchIcon,MoonIcon,PlusIcon,NavIcons,ChevronDownIcon,} from "./Icons";
 import { TAGS } from "../data/constants";
 
 const NAV_ITEMS = [
@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { label: "Trash", count: 2 },
 ];
 
-export default function Sidebar({ activeNav, onNavChange, search, onSearchChange, darkMode, onDarkModeToggle }) {
+export default function Sidebar({activeNav,onNavChange,search,onSearchChange,darkMode,onDarkModeToggle,activeTag,onTagSelect}) {
   return (
     <aside className="sidebar">
       {/* Logo */}
@@ -55,7 +55,13 @@ export default function Sidebar({ activeNav, onNavChange, search, onSearchChange
       <div className="section-label">Tags</div>
       <div className="nav-section">
         {TAGS.map((tag) => (
-          <div key={tag.name} className="nav-item">
+          <div
+            key={tag.name}
+            className={`nav-item ${activeTag === tag.name ? "active" : ""}`}
+            onClick={() =>
+              onTagSelect(activeTag === tag.name ? null : tag.name)
+            }
+          >
             <span className="tag-dot" style={{ background: tag.color }} />
             {tag.name}
             <span className="count">{tag.count}</span>
@@ -68,7 +74,10 @@ export default function Sidebar({ activeNav, onNavChange, search, onSearchChange
         <div className="dark-mode-row">
           <MoonIcon />
           <span>Dark Mode</span>
-          <div className={`toggle ${darkMode ? "on" : ""}`} onClick={onDarkModeToggle} />
+          <div
+            className={`toggle ${darkMode ? "on" : ""}`}
+            onClick={onDarkModeToggle}
+          />
         </div>
         <div className="user-row">
           <div className="user-avatar">A</div>
