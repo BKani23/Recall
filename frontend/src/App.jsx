@@ -1,10 +1,12 @@
-import React from 'react'
-import './App.css'
+import React from "react";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
-    <div id='center'>Recall App!</div>
-  )
-}
+    <>
+      <Home />
+    </>
+  );
+};
 
-export default App
+export default App;
