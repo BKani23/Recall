@@ -5,7 +5,6 @@ import TagChip from "./TagChip";
 import { renderMarkdown } from "../utils/markdownRenderer";
 
 export default function NoteEditor({ note }) {
-  
   const [saved, setSaved] = useState(false);
 
   function handleSave() {
@@ -35,13 +34,13 @@ export default function NoteEditor({ note }) {
 
       {/* Note content */}
       <div className="editor-content">
-        
         <div className="editor-title">{note.title}</div>
 
         <div className="editor-tags">
-          {note.tags.map((tag) => (
-            <TagChip key={tag} name={tag} />
+          {note.tags?.map((tag) => (
+            <TagChip key={tag.name} tag={tag} />
           ))}
+
           <button className="add-tag-btn">
             <PlusIcon />
             Add tag
