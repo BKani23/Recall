@@ -15,7 +15,7 @@ export default function NoteCard({ note, isActive, onClick }) {
       </div>
       <div className="note-card-preview">{note.preview}</div>
       <div className="note-card-bottom">
-        <TagChip name={note.tag} />
+        <TagChip tag={note.tags?.[0]} />
         <span className="note-time">{note.time}</span>
       </div>
     </div>
