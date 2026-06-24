@@ -4,6 +4,7 @@ import NoteList from "../components/NoteList";
 import NoteEditor from "../components/NoteEditor";
 import styles from "../styles/styles";
 import { getNotes } from "../services/api";
+import { normalizeNote } from "../utils/normalizeNote";
 
 export default function App() {
   
@@ -18,13 +19,16 @@ export default function App() {
     const fetchNotes = async () => {
       try {
         const res = await getNotes();
-        setNotes(res.data);
-        setSelectedNote(res.data[0] || null);
+  
+        const safeNotes = res.data.map(normalizeNote);
+  
+        setNotes(safeNotes);
+        setSelectedNote(safeNotes[0] || null);
       } catch (err) {
         console.error("Error fetching notes:", err);
       }
     };
-
+  
     fetchNotes();
   }, []);
 
