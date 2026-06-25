@@ -15,7 +15,6 @@ export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,
     return () => window.removeEventListener("keydown", handleEsc);
   }, [onClose]);
 
-
   if (!isOpen) return null;
 
   const handleChange = (e) => {
@@ -82,7 +81,9 @@ export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,
           }
         />
 
-        <label>
+        <label className="pin-label">
+        <span>Pin note</span>
+
           <input
             type="checkbox"
             checked={draftNote.isPinned}
@@ -93,16 +94,13 @@ export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,
               }))
             }
           />
-          Pin note
         </label>
 
         <div className="modal-actions">
           <button onClick={onClose}>Cancel</button>
-
           <button onClick={handleSubmit} disabled={loading}>
             {loading ? "Creating..." : "Create"}
           </button>{" "}
-
         </div>
       </div>
     </div>

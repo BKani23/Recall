@@ -317,6 +317,10 @@ const styles = `
   border-color: #6366f1;
 }
 
+.modal-actions{
+display : flex;
+justify-content: space-between;}
+
 /* buttons */
 .modal-actions button {
   padding: 8px 12px;
@@ -326,13 +330,23 @@ const styles = `
 }
 
 .modal-actions button:first-child {
-  background: #f3f4f6;
+  background: #aab0bc;
 }
 
 .modal-actions button:last-child {
   background: #6366f1;
   color: white;
 }
+
+.pin-label{
+display : flex;
+justify-content: space-around;
+}
+
+.pin-label input{
+width : 16px
+}
+
 `;
 
 export default styles;

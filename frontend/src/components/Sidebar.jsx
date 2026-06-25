@@ -8,7 +8,7 @@ const NAV_ITEMS = [
 ];
 
 export default function Sidebar({activeNav,onNavChange,search,onSearchChange,darkMode,onDarkModeToggle,activeTag,
-onTagSelect,onCreateNote}) {
+  onTagSelect,onCreateNote}) {
   return (
 
     <aside className="sidebar">
