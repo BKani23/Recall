@@ -1,4 +1,4 @@
-import {SearchIcon,MoonIcon,PlusIcon,NavIcons,ChevronDownIcon,} from "./Icons";
+import {SearchIcon,MoonIcon,PlusIcon,NavIcons,ChevronDownIcon} from "./Icons";
 import { TAGS } from "../data/constants";
 
 const NAV_ITEMS = [
@@ -7,8 +7,10 @@ const NAV_ITEMS = [
   { label: "Trash", count: 2 },
 ];
 
-export default function Sidebar({activeNav,onNavChange,search,onSearchChange,darkMode,onDarkModeToggle,activeTag,onTagSelect}) {
+export default function Sidebar({activeNav,onNavChange,search,onSearchChange,darkMode,onDarkModeToggle,activeTag,
+onTagSelect,onCreateNote}) {
   return (
+
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
@@ -17,7 +19,7 @@ export default function Sidebar({activeNav,onNavChange,search,onSearchChange,dar
       </div>
 
       {/* New Note Button */}
-      <button className="new-note-btn">
+      <button className="new-note-btn" onClick={onCreateNote}>
         <PlusIcon />
         New Note
       </button>
