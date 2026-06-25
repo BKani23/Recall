@@ -1,16 +1,9 @@
-import {SearchIcon,MoonIcon,PlusIcon,NavIcons,ChevronDownIcon} from "./Icons";
-import { TAGS } from "../data/constants";
-
-const NAV_ITEMS = [
-  { label: "All Notes", count: 24 },
-  { label: "Pinned", count: 6 },
-  { label: "Trash", count: 2 },
-];
+import {SearchIcon,SunIcon,MoonIcon,PlusIcon,NavIcons,ChevronDownIcon,} from "./Icons";
 
 export default function Sidebar({activeNav,onNavChange,search,onSearchChange,darkMode,onDarkModeToggle,activeTag,
-  onTagSelect,onCreateNote}) {
+  onTagSelect,onCreateNote,navItems,tags,}) {
   return (
-
+    
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
@@ -37,8 +30,9 @@ export default function Sidebar({activeNav,onNavChange,search,onSearchChange,dar
 
       {/* Navigation */}
       <div className="nav-section">
-        {NAV_ITEMS.map(({ label, count }) => {
+        {navItems.map(({ label, count }) => {
           const Icon = NavIcons[label];
+
           return (
             <div
               key={label}
@@ -54,9 +48,8 @@ export default function Sidebar({activeNav,onNavChange,search,onSearchChange,dar
       </div>
 
       {/* Tags */}
-      <div className="section-label">Tags</div>
       <div className="nav-section">
-        {TAGS.map((tag) => (
+        {tags.map((tag) => (
           <div
             key={tag.name}
             className={`nav-item ${activeTag === tag.name ? "active" : ""}`}
@@ -70,12 +63,13 @@ export default function Sidebar({activeNav,onNavChange,search,onSearchChange,dar
           </div>
         ))}
       </div>
-
       {/* Footer */}
       <div className="sidebar-footer">
         <div className="dark-mode-row">
-          <MoonIcon />
-          <span>Dark Mode</span>
+          {darkMode ? <SunIcon /> : <MoonIcon />}
+
+          <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
+
           <div
             className={`toggle ${darkMode ? "on" : ""}`}
             onClick={onDarkModeToggle}
