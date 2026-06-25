@@ -47,6 +47,15 @@ export default function App() {
         return notes;
     }
   };
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [darkMode]);
+  
   // Fetch live notes
 
   useEffect(() => {
