@@ -103,9 +103,9 @@ npm run dev
 * [x] Search functionality
 * [x] Display notes UI (list + cards)
 * [x] Dark mode
+* [x] Pin notes
 * [ ] Create / edit / delete notes from UI
 * [ ] Tags support
-* [ ] Pin notes
 * [ ] Markdown support
 * [ ] Authentication (JWT)
 * [ ] Rich text editor
