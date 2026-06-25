@@ -9,6 +9,9 @@ export const createNote = (data) => API.post("/", data);
 
 export const getNotes = () => API.get("/");
 
+export const getTrashNotes = () => API.get("/trash");
+
+
 export const getNoteById = (id) => API.get(`/${id}`);
 
 export const updateNote = (id, data) => API.put(`/${id}`, data);
