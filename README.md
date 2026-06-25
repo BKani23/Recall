@@ -100,9 +100,9 @@ npm run dev
 * [x] API testing with Postman
 * [x] Frontend setup (React + Vite)
 * [x] Connect frontend to backend (Axios integration)
-* [ ] Display notes UI (list + cards)
+* [x] Search functionality
+* [x] Display notes UI (list + cards)
 * [ ] Create / edit / delete notes from UI
-* [ ] Search functionality
 * [ ] Tags support
 * [ ] Pin notes
 * [ ] Markdown support
