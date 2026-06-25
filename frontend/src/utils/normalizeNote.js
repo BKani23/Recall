@@ -20,8 +20,7 @@ export function normalizeNote(note) {
 
     tags: safeTags,
 
-    pinned: Boolean(note.isPinned),
-
+    pinned: note.isPinned === true,
     time: new Date(note.updatedAt || note.createdAt).toLocaleString(),
   };
 }
