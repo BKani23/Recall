@@ -8,14 +8,54 @@ import { normalizeNote } from "../utils/normalizeNote";
 import CreateNoteModal from "../components/CreateNoteModal";
 
 export default function App() {
+
   const [activeNav, setActiveNav] = useState("All Notes");
   const [selectedNote, setSelectedNote] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
   const [search, setSearch] = useState("");
-  const [notes, setNotes] = useState([]);
+  const [allNotes, setAllNotes] = useState([]);
+  const [trashNotes, setTrashNotes] = useState([]); 
   const [activeTag, setActiveTag] = useState(null);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Fetch live notes
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        const res = await getNotes();
+        setAllNotes(res.data.map(normalizeNote));
+      } catch (err) {
+        console.error("All notes error:", err);
+      }
+    };
+  
+    fetchAll();
+  }, []);
+  
+  useEffect(() => {
+    const fetchTrash = async () => {
+      try {
+        const res = await getTrashNotes();
+        setTrashNotes(res.data.map(normalizeNote));
+      } catch (err) {
+        console.error("Trash notes error:", err);
+      }
+    };
+  
+    fetchTrash();
+  }, []);
+
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [darkMode]);
+
+  const combinedNotes = [...allNotes, ...trashNotes];
 
   const [draftNote, setDraftNote] = useState({
     title: "",
@@ -23,6 +63,7 @@ export default function App() {
     tags: [],
     isPinned: false,
   });
+  
 
   const handleCreateClick = () => {
     setDraftNote({
@@ -72,68 +113,55 @@ export default function App() {
     return Object.values(tagMap);
   };
 
-  const navItems = getNavItems(notes);
-  const tags = getTags(notes);
+  const notes = activeNav === "Trash" ? trashNotes : allNotes;
 
-  const applyNavFilter = (notes) => {
-    switch (activeNav) {
-      case "Pinned":
-        return notes.filter((n) => n.pinned === true);
+  const navItems = [
+    {
+      label: "All Notes",
+      count: allNotes.filter((n) => !n.deleted).length,
+    },
+    {
+      label: "Pinned",
+      count: allNotes.filter((n) => n.pinned && !n.deleted).length,
+    },
+    {
+      label: "Trash",
+      count: trashNotes.length,
+    },
+  ];
+  const tags = getTags(combinedNotes);
 
-      case "Trash":
-        return notes; //  filtered by API
+  // const applyNavFilter = (notes) => {
+  //   switch (activeNav) {
+  //     case "Pinned":
+  //       return notes.filter((n) => n.pinned === true);
 
-      default:
-        return notes;
-    }
-  };
+  //     case "Trash":
+  //       return notes; //  filtered by API
 
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-  }, [darkMode]);
+  //     default:
+  //       return notes;
+  //   }
+  // };
 
-  // Fetch live notes
 
-  useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const res = await getNotes();
-        const safeNotes = res.data.map(normalizeNote);
-
-        setNotes(safeNotes);
-        setSelectedNote(safeNotes[0] || null);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    const fetchTrash = async () => {
-      try {
-        const res = await getTrashNotes();
-        const safeNotes = res.data.map(normalizeNote);
-
-        setNotes(safeNotes);
-        setSelectedNote(safeNotes[0] || null);
-      } catch (err) {
-        console.error("Error fetching notes:", err);
-      }
-    };
-
-    if (activeNav === "Trash") fetchTrash();
-    else fetchNotes();
-  }, [activeNav]);
   // Search filter
-  const filteredNotes = applyNavFilter(notes).filter((n) => {
+  let baseNotes = activeNav === "Trash" ? trashNotes : allNotes;
+
+  let filtered = baseNotes;
+  
+  if (activeNav === "Pinned") {
+    filtered = filtered.filter((n) => n.pinned && !n.deleted);
+  }
+  
+  const filteredNotes = filtered.filter((n) => {
     const matchesSearch =
       n.title.toLowerCase().includes(search.toLowerCase()) ||
       n.preview.toLowerCase().includes(search.toLowerCase());
-
-    const matchesTag = !activeTag || n.tags.some((t) => t.name === activeTag);
-
+  
+    const matchesTag =
+      !activeTag || n.tags.some((t) => t.name === activeTag);
+  
     return matchesSearch && matchesTag;
   });
   return (
@@ -168,7 +196,7 @@ export default function App() {
           onClose={() => setIsModalOpen(false)}
           draftNote={draftNote}
           setDraftNote={setDraftNote}
-          setNotes={setNotes}
+          setAllNotes={setAllNotes}
           setSelectedNote={setSelectedNote}
         />
       </div>

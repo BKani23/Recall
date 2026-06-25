@@ -3,7 +3,7 @@ import {SearchIcon,SunIcon,MoonIcon,PlusIcon,NavIcons,ChevronDownIcon,} from "./
 export default function Sidebar({activeNav,onNavChange,search,onSearchChange,darkMode,onDarkModeToggle,activeTag,
   onTagSelect,onCreateNote,navItems,tags,}) {
   return (
-    
+
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
@@ -25,7 +25,7 @@ export default function Sidebar({activeNav,onNavChange,search,onSearchChange,dar
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
         />
-        <span className="sidebar-kbd">⌘K</span>
+       
       </div>
 
       {/* Navigation */}

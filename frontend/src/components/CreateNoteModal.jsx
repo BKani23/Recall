@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { createNote } from "../services/api";
 import { normalizeNote } from "../utils/normalizeNote";
 
-export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,setNotes,setSelectedNote}) {
+export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,setAllNotes,setSelectedNote}) {
 
   const [loading, setLoading] = useState(false);
 
@@ -29,13 +29,14 @@ export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,
   const handleSubmit = async () => {
     try {
       setLoading(true);
-
+  
       const res = await createNote(draftNote);
       const newNote = normalizeNote(res.data);
-
-      setNotes((prev) => [newNote, ...prev]);
+  
+      // ONLY add to active notes
+      setAllNotes((prev) => [newNote, ...prev]);
+  
       setSelectedNote(newNote);
-
       onClose();
     } catch (err) {
       console.error("Create note failed:", err);
