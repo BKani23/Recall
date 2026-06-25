@@ -35,6 +35,46 @@ export default function App() {
     setIsModalOpen(true);
   };
 
+  const getNavItems = (notes) => [
+    {
+      label: "All Notes",
+      count: notes.filter((n) => !n.deleted).length,
+    },
+    {
+      label: "Pinned",
+      count: notes.filter((n) => n.pinned && !n.deleted).length,
+    },
+    {
+      label: "Trash",
+      count: notes.filter((n) => n.deleted).length,
+    },
+  ];
+
+  const getTags = (notes) => {
+    const tagMap = {};
+
+    notes.forEach((note) => {
+      if (!note.tags || note.deleted) return;
+
+      note.tags.forEach((tag) => {
+        if (!tagMap[tag.name]) {
+          tagMap[tag.name] = {
+            name: tag.name,
+            color: tag.color,
+            count: 0,
+          };
+        }
+
+        tagMap[tag.name].count += 1;
+      });
+    });
+
+    return Object.values(tagMap);
+  };
+
+  const navItems = getNavItems(notes);
+  const tags = getTags(notes);
+
   const applyNavFilter = (notes) => {
     switch (activeNav) {
       case "Pinned":
@@ -55,7 +95,7 @@ export default function App() {
       document.body.classList.remove("dark");
     }
   }, [darkMode]);
-  
+
   // Fetch live notes
 
   useEffect(() => {
@@ -110,6 +150,9 @@ export default function App() {
           activeTag={activeTag}
           onTagSelect={setActiveTag}
           onCreateNote={handleCreateClick}
+          notes={notes}
+          navItems={navItems}
+          tags={tags}
         />
 
         <NoteList
