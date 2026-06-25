@@ -249,38 +249,90 @@ const styles = `
   .save-btn:hover { background: #6d28d9; }
 
   .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  /* animation */
+  animation: fadeIn 0.15s ease-out;
+}
+
+.modal {
+  width: 420px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  /* animation */
+  animation: popIn 0.18s ease-out;
+  transform-origin: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
   }
-  
-  .modal {
-    width: 420px;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
-  
-  .modal input,
-  .modal textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-  }
-  
-  .modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
+}
+
+/* nicer inputs */
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.modal input:focus,
+.modal textarea:focus {
+  border-color: #6366f1;
+}
+
+/* buttons */
+.modal-actions button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-actions button:first-child {
+  background: #f3f4f6;
+}
+
+.modal-actions button:last-child {
+  background: #6366f1;
+  color: white;
+}
 `;
 
 export default styles;
