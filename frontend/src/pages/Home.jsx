@@ -8,13 +8,12 @@ import { normalizeNote } from "../utils/normalizeNote";
 import CreateNoteModal from "../components/CreateNoteModal";
 
 export default function App() {
-
   const [activeNav, setActiveNav] = useState("All Notes");
   const [selectedNote, setSelectedNote] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
   const [search, setSearch] = useState("");
   const [allNotes, setAllNotes] = useState([]);
-  const [trashNotes, setTrashNotes] = useState([]); 
+  const [trashNotes, setTrashNotes] = useState([]);
   const [activeTag, setActiveTag] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,10 +28,10 @@ export default function App() {
         console.error("All notes error:", err);
       }
     };
-  
+
     fetchAll();
   }, []);
-  
+
   useEffect(() => {
     const fetchTrash = async () => {
       try {
@@ -42,10 +41,9 @@ export default function App() {
         console.error("Trash notes error:", err);
       }
     };
-  
+
     fetchTrash();
   }, []);
-
 
   useEffect(() => {
     if (darkMode) {
@@ -63,7 +61,6 @@ export default function App() {
     tags: [],
     isPinned: false,
   });
-  
 
   const handleCreateClick = () => {
     setDraftNote({
@@ -144,26 +141,34 @@ export default function App() {
   //   }
   // };
 
-
   // Search filter
   let baseNotes = activeNav === "Trash" ? trashNotes : allNotes;
 
   let filtered = baseNotes;
-  
+
   if (activeNav === "Pinned") {
     filtered = filtered.filter((n) => n.pinned && !n.deleted);
   }
-  
+
   const filteredNotes = filtered.filter((n) => {
     const matchesSearch =
       n.title.toLowerCase().includes(search.toLowerCase()) ||
       n.preview.toLowerCase().includes(search.toLowerCase());
-  
-    const matchesTag =
-      !activeTag || n.tags.some((t) => t.name === activeTag);
-  
+
+    const matchesTag = !activeTag || n.tags.some((t) => t.name === activeTag);
+
     return matchesSearch && matchesTag;
   });
+
+  const handleTogglePin = (id) => {
+    const updateNotes = (prev) =>
+      prev.map((note) =>
+        note.id === id ? { ...note, pinned: !note.pinned } : note
+      );
+  
+    setAllNotes(updateNotes);
+    setTrashNotes(updateNotes);
+  };
   return (
     <>
       <style>{styles}</style>
@@ -187,6 +192,7 @@ export default function App() {
           notes={filteredNotes}
           selectedNote={selectedNote}
           onSelectNote={setSelectedNote}
+          onTogglePin={handleTogglePin}
         />
 
         <NoteEditor note={selectedNote} />

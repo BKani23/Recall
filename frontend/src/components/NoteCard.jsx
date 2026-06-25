@@ -1,7 +1,7 @@
 import { PinIcon } from "./Icons";
 import TagChip from "./TagChip";
 
-export default function NoteCard({ note, isActive, onClick }) {
+export default function NoteCard({ note, isActive, onClick, onTogglePin }) {
   return (
     <div
       className={`note-card ${isActive ? "active" : ""}`}
@@ -9,11 +9,20 @@ export default function NoteCard({ note, isActive, onClick }) {
     >
       <div className="note-card-top">
         <span className="note-card-title">{note.title}</span>
-        <button className="pin-btn">
+
+        <button
+          className="pin-btn"
+          onClick={(e) => {
+            e.stopPropagation(); // prevent selecting note
+            onTogglePin(note.id);
+          }}
+        >
           <PinIcon active={note.pinned} />
         </button>
       </div>
+
       <div className="note-card-preview">{note.preview}</div>
+
       <div className="note-card-bottom">
         <TagChip tag={note.tags?.[0]} />
         <span className="note-time">{note.time}</span>
