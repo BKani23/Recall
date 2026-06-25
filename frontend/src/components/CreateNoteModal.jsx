@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createNote } from "../services/api";
 import { normalizeNote } from "../utils/normalizeNote";
 
 export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,setNotes,setSelectedNote}) {
-     
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
+
+
   if (!isOpen) return null;
 
   const handleChange = (e) => {
@@ -17,6 +29,8 @@ export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
+
       const res = await createNote(draftNote);
       const newNote = normalizeNote(res.data);
 
@@ -26,6 +40,14 @@ export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,
       onClose();
     } catch (err) {
       console.error("Create note failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target.className === "modal-backdrop") {
+      onClose();
     }
   };
 
@@ -76,7 +98,11 @@ export default function CreateNoteModal({ isOpen,onClose,draftNote,setDraftNote,
 
         <div className="modal-actions">
           <button onClick={onClose}>Cancel</button>
-          <button onClick={handleSubmit}>Create</button>
+
+          <button onClick={handleSubmit} disabled={loading}>
+            {loading ? "Creating..." : "Create"}
+          </button>{" "}
+
         </div>
       </div>
     </div>
