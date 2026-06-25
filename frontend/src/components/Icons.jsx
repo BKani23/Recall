@@ -1,14 +1,6 @@
 export const SunIcon = () => (
-  <svg
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
+  <svg width="14"height="14"viewBox="0 0 24 24"fill="none"stroke="currentColor"strokeWidth="2"strokeLinecap="round"
+  strokeLinejoin="round">
     <circle cx="12" cy="12" r="4" />
     <path d="M12 2v2" />
     <path d="M12 20v2" />
@@ -22,7 +14,16 @@ export const SunIcon = () => (
 );
 
 export const PinIcon = ({ active }) => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill={active ? "#7c3aed" : "none"} stroke={active ? "#7c3aed" : "#9ca3af"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill={active ? "#2563eb" : "none"}
+    stroke={active ? "#2563eb" : "#94a3b8"}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="M12 17v5" />
     <path d="M9 10.5V6l-2-1V3h10v2l-2 1v4.5l3 2.5H6l3-2.5z" />
   </svg>

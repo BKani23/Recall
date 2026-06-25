@@ -1,18 +1,18 @@
 const styles = `
-  :root {
-    --purple: #7c3aed;
-    --purple-light: #ede9fe;
-    --bg: #f9fafb;
-    --surface: #f3f4f6;
-    --surface-hover: #e9eaf0;
-    --white: #ffffff;
-    --border: #e5e7eb;
-    --text-primary: #111827;
-    --text-secondary: #6b7280;
-    --text-muted: #9ca3af;
-    --sidebar-width: 220px;
-    --list-width: 280px;
-  }
+:root {
+  --primary: #14b8a6;
+  --primary-light: #ccfbf1;
+  --bg: #f9fafb;
+  --surface: #f3f4f6;
+  --surface-hover: #e9eaf0;
+  --white: #ffffff;
+  --border: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --sidebar-width: 220px;
+  --list-width: 280px;
+}
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 
@@ -41,7 +41,7 @@ const styles = `
   }
   .logo-icon {
     width: 32px; height: 32px;
-    background: var(--purple);
+    background: var(--primary);
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     color: white; font-size: 14px; font-weight: 700;
@@ -50,7 +50,7 @@ const styles = `
   .new-note-btn {
     margin: 0 12px 12px;
     padding: 8px 0;
-    background: var(--purple);
+    background: var(--primary);
     color: white;
     border: none;
     border-radius: 8px;
@@ -60,7 +60,8 @@ const styles = `
     display: flex; align-items: center; justify-content: center; gap: 6px;
     transition: background 0.15s;
   }
-  .new-note-btn:hover { background: #6d28d9; }
+  .new-note-btn:hover {   background: #0f766e;
+}
   .sidebar-search {
     margin: 0 12px 8px;
     display: flex; align-items: center; gap: 8px;
@@ -89,14 +90,15 @@ const styles = `
     user-select: none;
   }
   .nav-item:hover { background: var(--surface); }
-  .nav-item.active { background: var(--purple-light); color: var(--purple); font-weight: 600; }
+  .nav-item.active {  background: var(--primary-light);
+  color: var(--primary); font-weight: 600; }
   .nav-item .count {
     margin-left: auto;
     font-size: 12px;
     color: var(--text-muted);
     font-weight: 500;
   }
-  .nav-item.active .count { color: var(--purple); }
+  .nav-item.active .count { color: var(--text-primary); }
   .section-label {
     padding: 8px 16px 4px;
     font-size: 10px;
@@ -131,8 +133,9 @@ const styles = `
     top: 3px; left: 3px; transition: left 0.2s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
-  .toggle.on { background: var(--purple); }
-  .toggle.on::after { left: 19px; }
+  .toggle.on {
+    background: var(--primary);
+  }  .toggle.on::after { left: 19px; }
   .user-row {
     display: flex; align-items: center; gap: 8px;
     padding: 8px 4px;
@@ -142,7 +145,8 @@ const styles = `
   }
   .user-avatar {
     width: 30px; height: 30px;
-    background: var(--purple); color: white;
+    background:   background: var(--primary);
+    color: var(--primary);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 12px; font-weight: 700;
@@ -183,8 +187,8 @@ const styles = `
   }
   .note-card:hover { background: var(--surface); }
   .note-card.active {
-    border-color: var(--purple);
-    background: var(--purple-light);
+    border-color: var(--primary);
+    background: var(--primary-light);
   }
   .note-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
   .note-card-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
@@ -243,13 +247,15 @@ const styles = `
   }
   .editor-footer-meta { font-size: 12px; color: var(--text-muted); }
   .save-btn {
-    background: var(--purple); color: white;
+    background: var(--primary);
+    color: white;
     border: none; cursor: pointer;
     font-size: 13px; font-weight: 600;
     padding: 8px 20px; border-radius: 8px;
     transition: background 0.15s;
   }
-  .save-btn:hover { background: #6d28d9; }
+  .save-btn:hover {   background: #0f766e;
+}
 
 .modal-backdrop {
   position: fixed;
@@ -306,7 +312,7 @@ const styles = `
 
 .modal input:focus,
 .modal textarea:focus {
-  border-color: #6366f1;
+  border-color: var(--primary);
 }
 
 .modal-actions{
@@ -326,7 +332,7 @@ justify-content: space-between;}
 }
 
 .modal-actions button:last-child {
-  background: #6366f1;
+  background: #38e715;
   color: white;
 }
 
@@ -349,7 +355,7 @@ body.dark {
   --text-secondary: #cbd5e1;
   --text-muted: #94a3b8;
 
-  --purple-light: rgba(124, 58, 237, 0.15);
+  --primary-light: rgba(20, 184, 166, 0.15);
 }
 `;
 
