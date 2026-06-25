@@ -1,7 +1,12 @@
 import { FilterIcon } from "./Icons";
 import NoteCard from "./NoteCard";
 
-export default function NoteList({ notes, selectedNote, onSelectNote }) {
+export default function NoteList({
+  notes,
+  selectedNote,
+  onSelectNote,
+  onTogglePin,
+}) {
   return (
     <div className="note-list">
       <div className="note-list-header">
@@ -21,6 +26,7 @@ export default function NoteList({ notes, selectedNote, onSelectNote }) {
             note={note}
             isActive={selectedNote?.id === note.id}
             onClick={() => onSelectNote(note)}
+            onTogglePin={onTogglePin}
           />
         ))}
       </div>
@@ -28,38 +34,3 @@ export default function NoteList({ notes, selectedNote, onSelectNote }) {
   );
 }
 
-
-// import { useEffect, useState } from "react";
-// import { getNotes } from "../services/api";
-// import NoteCard from "./NoteCard";
-
-// function NotesList() {
-//   const [notes, setNotes] = useState([]);
-
-//   useEffect(() => {
-//     fetchNotes();
-//   }, []);
-
-//   async function fetchNotes() {
-//     try {
-//       const response = await getNotes();
-//       setNotes(response.data);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-
-//   return (
-//     <div>
-//       <h1>All Notes</h1>
-
-//       {notes.length === 0 ? (
-//         <p>No notes found.</p>
-//       ) : (
-//         notes.map((note) => <NoteCard key={note._id} note={note} />)
-//       )}
-//     </div>
-//   );
-// }
-
-// export default NotesList;
