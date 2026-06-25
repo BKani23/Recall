@@ -182,7 +182,10 @@ const styles = `
     transition: border-color 0.12s, background 0.12s;
   }
   .note-card:hover { background: var(--surface); }
-  .note-card.active { border-color: var(--purple); background: #faf8ff; }
+  .note-card.active {
+    border-color: var(--purple);
+    background: var(--purple-light);
+  }
   .note-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
   .note-card-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
   .note-card-preview { font-size: 12px; color: var(--text-secondary); margin: 4px 0 8px; line-height: 1.5; }
@@ -248,16 +251,6 @@ const styles = `
   }
   .save-btn:hover { background: #6d28d9; }
 
-  .modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -266,7 +259,6 @@ const styles = `
   align-items: center;
   justify-content: center;
   z-index: 1000;
-
   /* animation */
   animation: fadeIn 0.15s ease-out;
 }
@@ -346,7 +338,19 @@ justify-content: space-around;
 .pin-label input{
 width : 16px
 }
+body.dark {
+  --bg: #0f172a;
+  --white: #111827;
+  --surface: #1f2937;
+  --surface-hover: #273449;
+  --border: #374151;
 
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  --purple-light: rgba(124, 58, 237, 0.15);
+}
 `;
 
 export default styles;
