@@ -102,11 +102,11 @@ npm run dev
 * [x] Connect frontend to backend (Axios integration)
 * [x] Search functionality
 * [x] Display notes UI (list + cards)
+* [x] Dark mode
 * [ ] Create / edit / delete notes from UI
 * [ ] Tags support
 * [ ] Pin notes
 * [ ] Markdown support
-* [ ] Dark mode
 * [ ] Authentication (JWT)
 * [ ] Rich text editor
 * [ ] Export notes (PDF / TXT)
