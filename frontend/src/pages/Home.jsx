@@ -128,20 +128,6 @@ export default function App() {
   ];
   const tags = getTags(combinedNotes);
 
-  // const applyNavFilter = (notes) => {
-  //   switch (activeNav) {
-  //     case "Pinned":
-  //       return notes.filter((n) => n.pinned === true);
-
-  //     case "Trash":
-  //       return notes; //  filtered by API
-
-  //     default:
-  //       return notes;
-  //   }
-  // };
-
-  // Search filter
   let baseNotes = activeNav === "Trash" ? trashNotes : allNotes;
 
   let filtered = baseNotes;
