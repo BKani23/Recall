@@ -8,7 +8,7 @@ export const createNote = async (req, res) => {
       content: req.body.content,
       tags: req.body.tags || [],
       isPinned: req.body.isPinned === true || req.body.isPinned === "true",
-      isDeleted: false,
+      isDeleted : req.body.isDeleted // soon to be changed to false
     });
 
     res.status(201).json(note);
