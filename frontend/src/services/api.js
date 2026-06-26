@@ -17,3 +17,5 @@ export const getNoteById = (id) => API.get(`/${id}`);
 export const updateNote = (id, data) => API.put(`/${id}`, data);
 
 export const deleteNote = (id) => API.delete(`/${id}`);
+
+export const softDeleteNote = (id) => API.put(`/${id}`, { isDeleted: true });

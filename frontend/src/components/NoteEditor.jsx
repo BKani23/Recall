@@ -3,14 +3,33 @@ import { PinIcon, TrashIcon, DotsIcon, PlusIcon } from "./Icons";
 import EditorToolbar from "./EditorToolbar";
 import TagChip from "./TagChip";
 import { renderMarkdown } from "../utils/markdownRenderer";
+import { softDeleteNote } from "../services/api";
 
-export default function NoteEditor({ note }) {
+export default function NoteEditor({note,onDelete,setAllNotes,setTrashNotes,setSelectedNote,
+}) {
+  
   const [saved, setSaved] = useState(false);
 
   function handleSave() {
     setSaved(true);
     setTimeout(() => setSaved(false), 1500);
   }
+
+  const handleDelete = async () => {
+    try {
+      const { data: deletedNote } = await softDeleteNote(note.id);
+      console.log(deletedNote);
+      
+
+      setAllNotes((prev) => prev.filter((n) => n.id !== deletedNote.id));
+
+      setTrashNotes((prev) => [deletedNote, ...prev]);
+
+      setSelectedNote(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   if (!note) return null;
 
@@ -21,7 +40,11 @@ export default function NoteEditor({ note }) {
         <button className="editor-icon-btn" title="Pin">
           <PinIcon active={note.pinned} />
         </button>
-        <button className="editor-icon-btn" title="Delete">
+        <button
+          className="editor-icon-btn"
+          title="Delete"
+          onClick={handleDelete}
+        >
           <TrashIcon />
         </button>
         <button className="editor-icon-btn" title="More">

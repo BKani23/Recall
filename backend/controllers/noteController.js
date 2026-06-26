@@ -8,7 +8,7 @@ export const createNote = async (req, res) => {
       content: req.body.content,
       tags: req.body.tags || [],
       isPinned: req.body.isPinned === true || req.body.isPinned === "true",
-      isDeleted : req.body.isDeleted
+      isDeleted : req.body.isDeleted // soon to be changed to false
     });
 
     res.status(201).json(note);
@@ -63,9 +63,9 @@ export const deleteNote = async (req, res) => {
   try {
     await Note.findByIdAndUpdate(req.params.id, {
       isDeleted: true,
-    });   
+    });
     res.json({ message: "Note moved to trash" });
-    } catch (error) {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
