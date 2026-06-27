@@ -49,7 +49,7 @@ export default function Sidebar({activeNav,onNavChange,search,onSearchChange,dar
       <div className="nav-section">
         {tags.map((tag) => (
           <div
-            key={tag.name}
+          key={`${tag.name}-${tag.color ?? "no-color"}`}
             className={`nav-item ${activeTag === tag.name ? "active" : ""}`}
             onClick={() =>
               onTagSelect(activeTag === tag.name ? null : tag.name)
