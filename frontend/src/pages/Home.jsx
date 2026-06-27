@@ -148,17 +148,13 @@ export default function App() {
 
   const handleTogglePin = async (noteOrId) => {
     try {
-      const id = typeof noteOrId === "string"
-        ? noteOrId
-        : noteOrId?.id;
-  
+      const id = typeof noteOrId === "string" ? noteOrId : noteOrId?.id;
+
       if (!id) {
         console.error("Invalid note:", noteOrId);
         return;
       }
-  
-      console.log("UPDATING NOTE:", id);
-  
+
       const current = allNotes.find((n) => n.id === id);
       if (!current) return;
   
@@ -168,10 +164,9 @@ export default function App() {
   
       setAllNotes((prev) =>
         prev.map((n) =>
-          n.id === id ? { ...n, pinned: updated.data.isPinned } : n
-        )
+          n.id === id ? { ...n, pinned: updated.data.isPinned } : n,
+        ),
       );
-  
     } catch (err) {
       console.error("Failed to toggle pin:", err);
     }
@@ -207,7 +202,6 @@ export default function App() {
           setAllNotes={setAllNotes}
           setTrashNotes={setTrashNotes}
           setSelectedNote={setSelectedNote}
-         
         />
 
         <CreateNoteModal
