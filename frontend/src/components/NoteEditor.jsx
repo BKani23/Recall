@@ -6,6 +6,7 @@ import { renderMarkdown } from "../utils/markdownRenderer";
 import { softDeleteNote } from "../services/api";
 import { useEffect } from "react";
 import { updateNote } from "../services/api";
+import { TAGS } from "../data/constants";
 
 export default function NoteEditor({
   note,
@@ -16,6 +17,9 @@ export default function NoteEditor({
 }) {
   const [saved, setSaved] = useState(false);
 
+  const [tags, setTags] = useState([]);
+
+  const [showTagDropdown, setShowTagDropdown] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
@@ -24,14 +28,42 @@ export default function NoteEditor({
     if (note) {
       setTitle(note.title || "");
       setContent(note.content || "");
+      setTags(note.tags || []);
     }
   }, [note]);
+
   async function handleSave() {
     try {
       const updatedData = {
         title,
         content,
-        tags: note.tags.map((t) => t.name), // convert UI → DB format
+        tags: tags.map((t) => t.name),// convert UI → DB format
+        isPinned: note.pinned,
+      };
+
+      const { data: updatedNote } = await updateNote(note.id, updatedData);
+
+      console.log("Updated note:", updatedNote);
+
+      setAllNotes((prev) =>
+        prev.map((n) => (n.id === note.id ? updatedNote : n)),
+      );
+
+      setSaved(true);
+
+      
+      setTimeout(() => setSaved(false), 1500);
+    } catch (err) {
+      console.error("Failed to update note:", err);
+    }
+  }
+
+  async function handleSaveWithTags(updatedTags) {
+    try {
+      const updatedData = {
+        title,
+        content,
+        tags: updatedTags.map((t) => t.name),
         isPinned: note.pinned,
       };
   
@@ -47,6 +79,19 @@ export default function NoteEditor({
       console.error("Failed to update note:", err);
     }
   }
+
+  const handleAddTag = (tag) => {
+    const exists = tags.some((t) => t.name === tag.name);
+    if (exists) return;
+  
+    const updatedTags = [...tags, tag];
+  
+    setTags(updatedTags);
+    setShowTagDropdown(false);
+  
+   
+    handleSaveWithTags(updatedTags);
+  };
   const handleDelete = async () => {
     try {
       const { data: deletedNote } = await softDeleteNote(note.id);
@@ -117,14 +162,61 @@ export default function NoteEditor({
         )}
 
         <div className="editor-tags">
-          {note.tags?.map((tag) => (
+          {tags.map((tag) => (
             <TagChip key={tag.name} tag={tag} />
           ))}
 
-          <button className="add-tag-btn">
-            <PlusIcon />
-            Add tag
-          </button>
+          <div style={{ position: "relative" }}>
+            <button
+              className="add-tag-btn"
+              onClick={() => setShowTagDropdown((v) => !v)}
+            >
+              <PlusIcon />
+              Add tag
+            </button>
+
+            {showTagDropdown && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  background: "var(--white)",
+                  border: "1px solid var(--border)",
+                  borderRadius: 8,
+                  marginTop: 6,
+                  width: 180,
+                  maxHeight: 200,
+                  overflowY: "auto",
+                  zIndex: 1000,
+                }}
+              >
+                {TAGS.map((tag) => (
+                  <div
+                    key={tag.name}
+                    onClick={() => handleAddTag(tag)}
+                    style={{
+                      padding: "8px 10px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 8,
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        background: tag.color,
+                      }}
+                    />
+                    {tag.name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {isEditing ? (
