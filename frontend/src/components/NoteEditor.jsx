@@ -29,9 +29,10 @@ export default function NoteEditor({
   async function handleSave() {
     try {
       const updatedData = {
-        ...note,
         title,
         content,
+        tags: note.tags.map((t) => t.name), // convert UI → DB format
+        isPinned: note.pinned,
       };
   
       const { data: updatedNote } = await updateNote(note.id, updatedData);
@@ -94,22 +95,26 @@ export default function NoteEditor({
 
       {/* Note content */}
       <div className="editor-content">
-        <textarea
-          className="editor-title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          rows={1}
-          style={{
-            width: "100%",
-            fontSize: 22,
-            fontWeight: 700,
-            border: "none",
-            outline: "none",
-            background: "transparent",
-            color: "var(--text-primary)",
-            resize: "none",
-          }}
-        />
+        {isEditing ? (
+          <textarea
+            className="editor-title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            rows={1}
+            style={{
+              width: "100%",
+              fontSize: 22,
+              fontWeight: 700,
+              border: "none",
+              outline: "none",
+              background: "transparent",
+              color: "var(--text-primary)",
+              resize: "none",
+            }}
+          />
+        ) : (
+          <div className="editor-title">{title}</div>
+        )}
 
         <div className="editor-tags">
           {note.tags?.map((tag) => (
