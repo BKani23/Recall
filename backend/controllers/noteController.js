@@ -8,11 +8,10 @@ export const createNote = async (req, res) => {
       content: req.body.content,
       tags: req.body.tags || [],
       isPinned: req.body.isPinned === true || req.body.isPinned === "true",
-      isDeleted : req.body.isDeleted // soon to be changed to false
+      isDeleted: false
     });
 
     res.status(201).json(note);
-    
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -45,19 +44,27 @@ export const getNoteById = async (req, res) => {
 };
 // UPDATE
 export const updateNote = async (req, res) => {
+
   try {
-    const updatedNote = await Note.findByIdAndUpdate(
+
+      const updatedNote = await Note.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true }
+      {
+        returnDocument: "after",
+        runValidators: true,
+      }
     );
 
     res.json(updatedNote);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error(error);
+    res.status(500).json({
+      message: error.message,
+      stack: error.stack,
+    });
   }
 };
-
 // DELETE
 export const deleteNote = async (req, res) => {
   try {
