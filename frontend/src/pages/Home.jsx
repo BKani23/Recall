@@ -146,32 +146,31 @@ export default function App() {
     return matchesSearch && matchesTag;
   });
 
-  const handleTogglePin = async (id) => {
-
+  const handleTogglePin = async (noteOrId) => {
     try {
-      
-      let updatedNote = null;
+      const id = typeof noteOrId === "string"
+        ? noteOrId
+        : noteOrId?.id;
+  
+      if (!id) {
+        console.error("Invalid note:", noteOrId);
+        return;
+      }
+  
+      console.log("UPDATING NOTE:", id);
+  
+      const current = allNotes.find((n) => n.id === id);
+      if (!current) return;
+  
+      const updated = await updateNote(id, {
+        isPinned: !current.pinned,
+      });
   
       setAllNotes((prev) =>
-        prev.map((note) => {
-          if (note.id === id) {
-            updatedNote = { ...note, pinned: !note.pinned };
-            return updatedNote;
-          }
-          return note;
-        })
-      );
-  
-      setTrashNotes((prev) =>
-        prev.map((note) =>
-          note.id === id ? { ...note, pinned: !note.pinned } : note
+        prev.map((n) =>
+          n.id === id ? { ...n, pinned: updated.data.isPinned } : n
         )
       );
-  
-      
-      await updateNote(id, {
-        isPinned: updatedNote.pinned,
-      });
   
     } catch (err) {
       console.error("Failed to toggle pin:", err);
