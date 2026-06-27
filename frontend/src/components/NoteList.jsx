@@ -22,7 +22,7 @@ export default function NoteList({
       <div className="note-list-scroll">
         {notes.map((note) => (
           <NoteCard
-            key={note.id}
+            key={note.id || note._id}
             note={note}
             isActive={selectedNote?.id === note.id}
             onClick={() => onSelectNote(note)}
@@ -33,4 +33,3 @@ export default function NoteList({
     </div>
   );
 }
-
