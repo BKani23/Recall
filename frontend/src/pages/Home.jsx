@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import NoteList from "../components/NoteList";
 import NoteEditor from "../components/NoteEditor";
 import styles from "../styles/styles";
-import { getNotes, getTrashNotes } from "../services/api";
+import { getNotes, getTrashNotes, softDeleteNote,updateNote } from "../services/api";
 import { normalizeNote } from "../utils/normalizeNote";
 import CreateNoteModal from "../components/CreateNoteModal";
 
@@ -146,14 +146,36 @@ export default function App() {
     return matchesSearch && matchesTag;
   });
 
-  const handleTogglePin = (id) => {
-    const updateNotes = (prev) =>
-      prev.map((note) =>
-        note.id === id ? { ...note, pinned: !note.pinned } : note
+  const handleTogglePin = async (id) => {
+
+    try {
+      
+      let updatedNote = null;
+  
+      setAllNotes((prev) =>
+        prev.map((note) => {
+          if (note.id === id) {
+            updatedNote = { ...note, pinned: !note.pinned };
+            return updatedNote;
+          }
+          return note;
+        })
       );
   
-    setAllNotes(updateNotes);
-    setTrashNotes(updateNotes);
+      setTrashNotes((prev) =>
+        prev.map((note) =>
+          note.id === id ? { ...note, pinned: !note.pinned } : note
+        )
+      );
+  
+      
+      await updateNote(id, {
+        isPinned: updatedNote.pinned,
+      });
+  
+    } catch (err) {
+      console.error("Failed to toggle pin:", err);
+    }
   };
   return (
     <>
@@ -181,7 +203,13 @@ export default function App() {
           onTogglePin={handleTogglePin}
         />
 
-        <NoteEditor note={selectedNote} />
+        <NoteEditor
+          note={selectedNote}
+          setAllNotes={setAllNotes}
+          setTrashNotes={setTrashNotes}
+          setSelectedNote={setSelectedNote}
+         
+        />
 
         <CreateNoteModal
           isOpen={isModalOpen}
