@@ -357,6 +357,36 @@ body.dark {
 
   --primary-light: rgba(20, 184, 166, 0.15);
 }
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 6px;
+  min-width: 160px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  z-index: 2000;
+  animation: popIn 0.12s ease-out;
+}
+
+.dropdown-menu button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 13px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 6px;
+  color: var(--text-primary);
+}
+
+.dropdown-menu button:hover {
+  background: var(--surface);
+}
 `;
 
 export default styles;
