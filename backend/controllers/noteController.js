@@ -86,3 +86,26 @@ export const getTrashNotes = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const duplicateNote = async (req, res) => {
+  try {
+    const original = await Note.findById(req.params.id);
+
+    if (!original) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+
+    const copy = new Note({
+      title: original.title + " (Copy)",
+      content: original.content,
+      tags: original.tags,
+      isPinned: false,
+    });
+
+    const saved = await copy.save();
+
+    res.status(201).json(saved);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

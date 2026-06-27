@@ -7,6 +7,8 @@ import { softDeleteNote } from "../services/api";
 import { useEffect } from "react";
 import { updateNote } from "../services/api";
 import { TAGS } from "../data/constants";
+import DropdownMenu from "./DropdownMenu";
+import {duplicateNote} from "../services/api";
 
 export default function NoteEditor({
   note,
@@ -37,7 +39,7 @@ export default function NoteEditor({
       const updatedData = {
         title,
         content,
-        tags: tags.map((t) => t.name),// convert UI → DB format
+        tags: tags.map((t) => t.name), // convert UI → DB format
         isPinned: note.pinned,
       };
 
@@ -51,7 +53,6 @@ export default function NoteEditor({
 
       setSaved(true);
 
-      
       setTimeout(() => setSaved(false), 1500);
     } catch (err) {
       console.error("Failed to update note:", err);
@@ -66,13 +67,13 @@ export default function NoteEditor({
         tags: updatedTags.map((t) => t.name),
         isPinned: note.pinned,
       };
-  
+
       const { data: updatedNote } = await updateNote(note.id, updatedData);
-  
+
       setAllNotes((prev) =>
-        prev.map((n) => (n.id === note.id ? updatedNote : n))
+        prev.map((n) => (n.id === note.id ? updatedNote : n)),
       );
-  
+
       setSaved(true);
       setTimeout(() => setSaved(false), 1500);
     } catch (err) {
@@ -83,13 +84,12 @@ export default function NoteEditor({
   const handleAddTag = (tag) => {
     const exists = tags.some((t) => t.name === tag.name);
     if (exists) return;
-  
+
     const updatedTags = [...tags, tag];
-  
+
     setTags(updatedTags);
     setShowTagDropdown(false);
-  
-   
+
     handleSaveWithTags(updatedTags);
   };
   const handleDelete = async () => {
@@ -113,9 +113,6 @@ export default function NoteEditor({
     <div className="editor-panel">
       {/* Top action bar */}
       <div className="editor-topbar">
-        <button className="editor-icon-btn" title="Pin">
-          <PinIcon active={note.pinned} />
-        </button>
         <button
           className="editor-icon-btn"
           title="Delete"
@@ -123,9 +120,50 @@ export default function NoteEditor({
         >
           <TrashIcon />
         </button>
-        <button className="editor-icon-btn" title="More">
-          <DotsIcon />
-        </button>
+        <DropdownMenu
+          trigger={
+            <button className="editor-icon-btn" title="More">
+              <DotsIcon />
+            </button>
+          }
+        >
+          {({ close }) => (
+            <>
+              <button
+                onClick={() => {
+                  /* pin logic */ close();
+                }}
+              >
+                Clear content
+              </button>
+              <button
+                onClick={() => {
+                  /* copy logic */ close();
+                }}
+              >
+                Copy content
+              </button>
+
+              <button
+                onClick={async () => {
+                  try {
+                    const { data: newNote } = await duplicateNote(note.id);
+
+                    setAllNotes((prev) => [newNote, ...prev]);
+
+                    setSelectedNote(newNote);
+
+                    close();
+                  } catch (err) {
+                    console.error("Failed to duplicate note:", err);
+                  }
+                }}
+              >
+                Duplicate Note
+              </button>
+            </>
+          )}
+        </DropdownMenu>
       </div>
 
       {/* Formatting toolbar */}
